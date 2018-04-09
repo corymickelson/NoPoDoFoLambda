@@ -1,0 +1,29 @@
+{
+  "name": "nopodofolambda",
+  "version": "0.3.1",
+  "description": "NoPoDoFo executable for aws lambda",
+  "main": "index.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/corymickelson/NoPoDoFoLambda.git"
+  },
+  "keywords": [
+    "pdf",
+    "NoPoDoFo",
+    "PoDoFo",
+    "AWS",
+    "Lambda"
+  ],
+  "author": "Cory Mickelson <mickelsoncory@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/corymickelson/NoPoDoFoLambda/issues"
+  },
+  "homepage": "https://github.com/corymickelson/NoPoDoFoLambda#readme",
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}
