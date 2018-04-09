@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 function setup() {
-    const libSource = `${process.env['LAMBDA_TASK_ROOT']}/node_modules/commonpdf_podofo`;
+    const libSource = `${process.env['LAMBDA_TASK_ROOT']}/lib`;
     process.env['PATH'] = `${process.env['PATH']}:${libSource}`;
     process.env['LD_LIBRARY_PATH'] = `${process.env['LD_LIBRARY_PATH']}:${libSource}`;
 }
