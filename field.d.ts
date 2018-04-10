@@ -36,6 +36,7 @@ export interface IFieldInfo {
 export declare type FieldType = 'TextField' | 'CheckBox' | 'RadioButton' | 'PushButton' | 'Signature' | 'ListField' | 'ComboBox' | 'ListBox';
 export declare class Field {
     private _instance;
+    readOnly: boolean;
     constructor(_instance: NPDFInternal);
     getType(): FieldType;
     getFieldName(): string;

@@ -30,7 +30,6 @@ import { Stream } from './stream';
 import { Form } from './form';
 import { ContentsTokenizer } from './parser';
 import { Ref } from './reference';
-import { setup } from './setup';
 import { Cell, Table } from './table';
 declare const _default: {
     ContentsTokenizer: typeof ContentsTokenizer;
@@ -70,7 +69,6 @@ declare const _default: {
     Signer: typeof Signer;
     signature: typeof signature;
     Ref: typeof Ref;
-    setup: typeof setup;
     Cell: typeof Cell;
     Table: typeof Table;
 };

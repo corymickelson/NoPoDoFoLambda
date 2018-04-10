@@ -32,7 +32,6 @@ const stream_1 = require("./stream");
 const form_1 = require("./form");
 const parser_1 = require("./parser");
 const reference_1 = require("./reference");
-const setup_1 = require("./setup");
 const table_1 = require("./table");
 exports.default = {
     ContentsTokenizer: parser_1.ContentsTokenizer,
@@ -72,7 +71,6 @@ exports.default = {
     Signer: signer_1.Signer,
     signature: signer_1.signature,
     Ref: reference_1.Ref,
-    setup: setup_1.setup,
     Cell: table_1.Cell,
     Table: table_1.Table,
 };

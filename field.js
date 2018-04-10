@@ -25,6 +25,12 @@ class Field {
     constructor(_instance) {
         this._instance = _instance;
     }
+    get readOnly() {
+        return this._instance.readOnly;
+    }
+    set readOnly(v) {
+        this._instance.readOnly = v;
+    }
     getType() {
         return this._instance.getType();
     }
