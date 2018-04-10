@@ -24,12 +24,22 @@ const object_1 = require("./object");
 const page_1 = require("./page");
 const annotation_1 = require("./annotation");
 const field_1 = require("./field");
+const image_1 = require("./image");
 const painter_1 = require("./painter");
+const rect_1 = require("./rect");
 const signer_1 = require("./signer");
+const stream_1 = require("./stream");
+const form_1 = require("./form");
+const parser_1 = require("./parser");
 const reference_1 = require("./reference");
 const setup_1 = require("./setup");
 const table_1 = require("./table");
 exports.default = {
+    ContentsTokenizer: parser_1.ContentsTokenizer,
+    Form: form_1.Form,
+    Stream: stream_1.Stream,
+    Rect: rect_1.Rect,
+    Image: image_1.Image,
     Data: data_1.Data,
     Document: document_1.Document,
     FontEncoding: document_1.FontEncoding,
