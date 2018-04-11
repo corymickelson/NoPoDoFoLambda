@@ -1,1 +1,0 @@
-{"version":3,"file":"stream.js","sourceRoot":"","sources":["../lib/stream.ts"],"names":[],"mappings":";;AAAA;;;;;;;;;;;;;;;;;GAiBG;AACH;IACI,YAAoB,SAAa;QAAb,cAAS,GAAT,SAAS,CAAI;IAAG,CAAC;IACrC,KAAK,CAAC,MAAa,EAAE,EAA2B;QAC5C,IAAI,CAAC,SAAS,CAAC,KAAK,CAAC,MAAM,EAAE,EAAE,CAAC,CAAA;IACpC,CAAC;CAEJ;AAND,wBAMC"}
