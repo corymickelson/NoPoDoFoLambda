@@ -73,9 +73,7 @@ class Page {
     }
     getMediaBox() {
         const mediaBoxPositions = this._instance.getMediaBox();
-        const mediaBoxRect = new rect_1.Rect([mediaBoxPositions.left, mediaBoxPositions.bottom, mediaBoxPositions.width, mediaBoxPositions.height]);
-        // return mediaBoxPositions
-        return mediaBoxRect;
+        return new rect_1.Rect([mediaBoxPositions.left, mediaBoxPositions.bottom, mediaBoxPositions.width, mediaBoxPositions.height]);
     }
     getBleedBox() {
         const positions = this._instance.getBleedBox();

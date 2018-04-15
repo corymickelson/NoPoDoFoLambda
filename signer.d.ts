@@ -30,4 +30,4 @@ export declare class Signer {
     setField(field: SignatureField): void;
     getField(): SignatureField;
 }
-export declare function signature(certfile: string, pkeyfile: string, password?: string): string;
+export declare function signature(certfile: string, pkeyfile: string, password?: string): Promise<string>;

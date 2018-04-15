@@ -204,18 +204,18 @@ class Document extends events_1.EventEmitter {
     }
     /**
      * Persist changes and write to disk or if no arguments provided returns Buffer
-     * @param {string} [file] - optional, if provided, will try to write to file
-     * @param {Function} cb - Callbck Function
+     * @param {string|Function} output - optional, if provided, will try to write to file
+     * @param {Function} [cb] - optional callback
      */
-    write(cb, file) {
+    write(output, cb) {
         if (!this._loaded) {
             throw Error('Document has not been loaded, await ready event');
         }
-        if (file) {
-            this._instance.write(file, cb);
+        if (typeof output === 'string' && cb !== null || cb !== undefined) {
+            this._instance.write(output, cb);
         }
         else {
-            this._instance.writeBuffer(cb);
+            this._instance.writeBuffer(output);
         }
     }
     getTrailer() {

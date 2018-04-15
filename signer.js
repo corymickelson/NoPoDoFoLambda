@@ -21,6 +21,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const document_1 = require("./document");
 const field_1 = require("./field");
 const fs_1 = require("fs");
+const constants_1 = require("constants");
 /**
  * The Signer class binds PoDoFo::PdfSignOutputDevice
  */
@@ -50,10 +51,22 @@ class Signer {
 }
 exports.Signer = Signer;
 function signature(certfile, pkeyfile, password = '') {
-    if (!fs_1.existsSync(certfile) || !fs_1.existsSync(pkeyfile)) {
-        throw Error("One or both files not found");
-    }
-    return document_1.__mod.signature(certfile, pkeyfile, password);
+    return new Promise((resolve, reject) => {
+        const check = (file) => {
+            return new Promise((resolve, reject) => {
+                fs_1.access(file, constants_1.F_OK | constants_1.R_OK, err => {
+                    err ? reject(err) : resolve();
+                });
+            });
+        };
+        Promise.all([check(certfile), check(pkeyfile)])
+            .then(() => {
+            resolve(document_1.__mod.signature(certfile, pkeyfile, password));
+        })
+            .catch(err => {
+            reject(err);
+        });
+    });
 }
 exports.signature = signature;
 //# sourceMappingURL=signer.js.map

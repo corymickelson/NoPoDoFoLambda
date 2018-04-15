@@ -22,7 +22,7 @@ const document_1 = require("./document");
 class Image {
     /**
      *
-     * @param {IDocument} _doc - document to embed image in
+     * @param {Document} _doc - document to embed image in
      * @param {string | Buffer} data - image file path, or image buffer (buffer not yet implemented)
      */
     constructor(_doc, data) {

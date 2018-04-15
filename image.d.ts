@@ -23,7 +23,7 @@ export declare class Image {
     private _instance;
     /**
      *
-     * @param {IDocument} _doc - document to embed image in
+     * @param {Document} _doc - document to embed image in
      * @param {string | Buffer} data - image file path, or image buffer (buffer not yet implemented)
      */
     constructor(_doc: Document, data?: string | Buffer);

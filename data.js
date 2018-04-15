@@ -33,7 +33,7 @@ class Data {
     }
     write(output) {
         if (!output) {
-            throw Error("outpust must be a valid path");
+            throw Error("output must be a valid path");
         }
         this._instance.write(output);
     }

@@ -7,6 +7,7 @@ import { Font } from "./painter";
 import { Signer } from './signer';
 import { Ref } from "./reference";
 export declare const __mod: any;
+export declare type Callback = (err: Error, data: Buffer | string) => void;
 export declare enum FontEncoding {
     WinAnsi = 1,
     Standard = 2,
@@ -75,10 +76,10 @@ export declare class Document extends EventEmitter {
     isLinearized(): boolean;
     /**
      * Persist changes and write to disk or if no arguments provided returns Buffer
-     * @param {string} [file] - optional, if provided, will try to write to file
-     * @param {Function} cb - Callbck Function
+     * @param {string|Function} output - optional, if provided, will try to write to file
+     * @param {Function} [cb] - optional callback
      */
-    write(cb: (e: Error, v: Buffer | void) => void, file?: string): void;
+    write(output: Callback | string, cb?: Callback): void;
     getTrailer(): Obj;
     getCatalog(): Obj;
     isAllowed(protection: ProtectionOption): boolean;
