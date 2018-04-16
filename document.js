@@ -61,14 +61,19 @@ class Document extends events_1.EventEmitter {
         this._loaded = false;
         this._password = undefined;
         this._instance = new exports.__mod.Document();
-        fs_1.access(file, fs_1.constants.F_OK | fs_1.constants.R_OK, err => {
-            if (err) {
-                this.emit('error', Error('file not found'));
-            }
-            else {
-                this.load(file, update, pwd);
-            }
-        });
+        if (Buffer.isBuffer(file)) {
+            this.load(file, update, pwd || '');
+        }
+        else {
+            fs_1.access(file, fs_1.constants.F_OK | fs_1.constants.R_OK, err => {
+                if (err) {
+                    this.emit('error', Error('file not found'));
+                }
+                else {
+                    this.load(file, update, pwd || '');
+                }
+            });
+        }
     }
     get loaded() {
         return this._loaded;
@@ -82,8 +87,11 @@ class Document extends events_1.EventEmitter {
     get encrypt() {
         if (this._encrypt)
             return this._encrypt;
-        else
-            return new exports.__mod.Encrypt(this._instance);
+        else {
+            const encrypt = new exports.__mod.Encrypt(this._instance);
+            this._encrypt = encrypt;
+            return encrypt;
+        }
     }
     static gc(file, pwd, output, cb) {
         fs_1.access(file, constants_1.F_OK, err => {
@@ -121,7 +129,7 @@ class Document extends events_1.EventEmitter {
                 this.emit('ready', this);
             }
         };
-        pwd ? this._instance.load(file, cb, update, pwd) : this._instance.load(file, cb, update);
+        this._instance.load(file, cb, update, Buffer.isBuffer(file), pwd || '');
     }
     getPageCount() {
         if (!this._loaded) {

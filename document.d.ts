@@ -52,7 +52,7 @@ export declare class Document extends EventEmitter {
      * @param {string} [pwd] - document password
      * @returns void
      */
-    constructor(file: string, update?: boolean, pwd?: string);
+    constructor(file: string | Buffer, update?: boolean, pwd?: string);
     /**
      * load pdf file, emits 'ready' || 'error' events
      * @param file - file path
