@@ -1,11 +1,12 @@
 /// <reference types="node" />
-import { Obj } from './object';
+import { Obj, IObj } from './object';
 import { Page } from './page';
 import { EncryptOption, IEncrypt, ProtectionOption } from './encrypt';
 import { EventEmitter } from 'events';
 import { Font } from "./painter";
 import { Signer } from './signer';
 import { Ref } from "./reference";
+import { IForm } from "./form";
 export declare const __mod: any;
 export declare type Callback = (err: Error, data: Buffer | string) => void;
 export declare enum FontEncoding {
@@ -40,7 +41,10 @@ export declare class Document extends EventEmitter {
     private _loaded;
     private _password;
     private _encrypt;
+    private _objects?;
     readonly loaded: boolean;
+    readonly body: Array<IObj>;
+    readonly form: IForm | null;
     password: string;
     readonly encrypt: IEncrypt;
     static gc(file: string, pwd: string, output: string, cb: (e: Error, d: string | Buffer) => void): void;

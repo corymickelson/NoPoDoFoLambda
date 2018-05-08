@@ -16,11 +16,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-import { Document } from './document';
-import { Obj } from "./object";
-export declare class Form {
-    private _instance;
+import { NPDFDictionary } from './dictionary';
+export interface IForm {
     needAppearances: boolean;
-    constructor(document: Document);
-    getObject(): Obj;
+    dictionary: NPDFDictionary;
 }

@@ -27,9 +27,9 @@ import { Painter, Encoding, ExtGState, Font, NPDFAlignment, NPDFBlendMode, NPDFC
 import { Rect } from './rect';
 import { Signer, signature } from './signer';
 import { Stream } from './stream';
-import { Form } from './form';
+import { IForm } from './form';
 import { ContentsTokenizer } from './parser';
 import { Ref } from './reference';
 import { Cell, Table } from './table';
-export { ContentsTokenizer, Form, Stream, Rect, Image, Data, Document, FontEncoding, Obj, Page, Annotation, NPDFAction, NPDFAnnotation, NPDFAnnotationFlag, NPDFAnnotationType, CheckBox, Field, TextField, ListBox, ComboBox, Painter, Encoding, ExtGState, Font, NPDFAlignment, NPDFBlendMode, NPDFColorSpace, NPDFFontType, NPDFLineCapStyle, NPDFLineJoinStyle, NPDFRenderingIntent, NPDFStokeStyle, NPDFTextRenderingMode, NPDFVerticalAlignment, Signer, signature, Ref, Cell, Table };
+export { ContentsTokenizer, IForm, Stream, Rect, Image, Data, Document, FontEncoding, Obj, Page, Annotation, NPDFAction, NPDFAnnotation, NPDFAnnotationFlag, NPDFAnnotationType, CheckBox, Field, TextField, ListBox, ComboBox, Painter, Encoding, ExtGState, Font, NPDFAlignment, NPDFBlendMode, NPDFColorSpace, NPDFFontType, NPDFLineCapStyle, NPDFLineJoinStyle, NPDFRenderingIntent, NPDFStokeStyle, NPDFTextRenderingMode, NPDFVerticalAlignment, Signer, signature, Ref, Cell, Table };
 export declare const CONVERSION = 0.0028346456693;

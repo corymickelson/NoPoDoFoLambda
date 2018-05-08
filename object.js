@@ -1,6 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * This file is part of the NoPoDoFo (R) project.
+ * Copyright (c) 2017-2018
+ * Authors: Cory Mickelson, et al.
+ *
+ * NoPoDoFo is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * NoPoDoFo is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+const document_1 = require("./document");
 const reference_1 = require("./reference");
+const assert_1 = require("assert");
 /**
  * @desc This class represents a PDF indirect Object in memory
  *      It is possible to manipulate the stream which can be appended to the
@@ -239,7 +259,21 @@ class Obj {
         });
     }
     asObject() {
-        const internal = this._instance.getDictionary();
+        return Obj.objProxy(this._instance.getDictionary());
+    }
+    asReference() {
+        const i = this._instance.getReference();
+        return new reference_1.Ref(i);
+    }
+    asBuffer() {
+        return this._instance.getRawData();
+    }
+    /**
+     *
+     * @param internal - NPDFInternal Dictionary
+     */
+    static objProxy(internal) {
+        assert_1.ok(internal instanceof document_1.__mod.Dictionary);
         let data = internal.toObject();
         return new Proxy(internal, {
             get(target, prop) {
@@ -332,13 +366,6 @@ class Obj {
                 return false;
             }
         });
-    }
-    asReference() {
-        const i = this._instance.getReference();
-        return new reference_1.Ref(i);
-    }
-    asBuffer() {
-        return this._instance.getRawData();
     }
 }
 exports.Obj = Obj;

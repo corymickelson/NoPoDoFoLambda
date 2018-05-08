@@ -19,7 +19,6 @@
 import { Document } from './document';
 import { NPDFInternal, Obj } from "./object";
 import { Annotation } from "./annotation";
-import { Form } from "./form";
 export interface IFieldInfo {
     name: string;
     alternateName: string;
@@ -80,7 +79,7 @@ export declare class ComboBox extends EnumerableField {
 }
 export declare class SignatureField {
     private _instance;
-    constructor(annot: Annotation | any, form?: Form, doc?: Document);
+    constructor(annot: Annotation | any, doc?: Document);
     setReason(reason: string): void;
     setLocation(local: string): void;
     setCreator(creator: string): void;

@@ -1,6 +1,7 @@
 /// <reference types="node" />
-import { Ref } from "./reference";
+import { Ref, IRef } from "./reference";
 import { Stream } from "stream";
+import { NPDFDictionary } from "./dictionary";
 export declare type NPDFInternal = any;
 export declare type CoerceKeyType = 'boolean' | 'long' | 'name' | 'real';
 export declare type PDType = 'Boolean' | 'Number' | 'Name' | 'Real' | 'String' | 'Array' | 'Dictionary' | 'Reference' | 'RawData';
@@ -34,6 +35,40 @@ export interface NObj {
     };
     asReference(): Ref;
     asBuffer(): Buffer;
+}
+export interface IObj {
+    reference: number;
+    length: number;
+    stream: Stream;
+    type: PDType;
+    immutable: boolean;
+    hasStream(): boolean;
+    getOffset(key: string): Promise<number>;
+    write(output: string, cb: Function): void;
+    flateCompressStream(): void;
+    delayedStreamLoad(): void;
+    getBool(): boolean;
+    getDictionary(): NPDFDictionary;
+    getString(): string;
+    getName(): string;
+    getReal(): number;
+    getNumber(): number;
+    getArray(): IArray;
+    getReference(): IRef;
+    getBuffer(): Buffer;
+    clear(): void;
+    eq(i: NPDFInternal): boolean;
+}
+export interface IArray {
+    dirty: boolean;
+    length: number;
+    immutable: boolean;
+    toJS(): Array<any>;
+    at(i: number): IObj;
+    pop(): IObj;
+    clear(): void;
+    push(v: Object): void;
+    write(destination: string): void;
 }
 /**
  * @desc This class represents a PDF indirect Object in memory
@@ -93,4 +128,11 @@ export declare class Obj implements NObj {
     };
     asReference(): Ref;
     asBuffer(): Buffer;
+    /**
+     *
+     * @param internal - NPDFInternal Dictionary
+     */
+    static objProxy(internal: NPDFInternal): {
+        [key: string]: Obj;
+    };
 }

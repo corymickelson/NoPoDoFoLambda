@@ -78,6 +78,17 @@ class Document extends events_1.EventEmitter {
     get loaded() {
         return this._loaded;
     }
+    get body() {
+        // return this._instance.getObjects()
+        // if (!this._objects) {
+        // return (this._instance.getObjects() as NPDFInternal[]).map(i => new Obj(i))
+        return this._instance.body;
+        // }
+        // return this._objects
+    }
+    get form() {
+        return this._instance.form;
+    }
     set password(value) {
         this._password = value;
     }

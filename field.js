@@ -20,7 +20,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 const document_1 = require("./document");
 const object_1 = require("./object");
-const form_1 = require("./form");
 class Field {
     constructor(_instance) {
         this._instance = _instance;
@@ -141,9 +140,9 @@ class ComboBox extends EnumerableField {
 }
 exports.ComboBox = ComboBox;
 class SignatureField {
-    constructor(annot, form, doc) {
-        if (form instanceof form_1.Form && doc instanceof document_1.Document) {
-            this._instance = new document_1.__mod.SignatureField(annot._instance, form._instance, doc._instance);
+    constructor(annot, doc) {
+        if (doc instanceof document_1.Document) {
+            this._instance = new document_1.__mod.SignatureField(annot._instance, doc.form, doc._instance);
         }
         else {
             this._instance = new document_1.__mod.SignatureField(annot);
