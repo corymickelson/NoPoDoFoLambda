@@ -19,13 +19,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 const fs_1 = require("fs");
-const object_1 = require("./object");
 const page_1 = require("./page");
 const events_1 = require("events");
-const painter_1 = require("./painter");
 const signer_1 = require("./signer");
 const constants_1 = require("constants");
-const reference_1 = require("./reference");
 exports.__mod = require('bindings')('npdf');
 var FontEncoding;
 (function (FontEncoding) {
@@ -75,17 +72,31 @@ class Document extends events_1.EventEmitter {
             });
         }
     }
+    get body() {
+        return this._instance.body;
+    }
+    get trailer() {
+        return this._instance.trailer;
+    }
+    get catalog() {
+        return this._instance.catalog;
+    }
+    get version() {
+        return this._instance.version;
+    }
+    /**
+     * @desc A Document has been read into memory
+     * @returns {boolean}
+     */
     get loaded() {
         return this._loaded;
     }
-    get body() {
-        // return this._instance.getObjects()
-        // if (!this._objects) {
-        // return (this._instance.getObjects() as NPDFInternal[]).map(i => new Obj(i))
-        return this._instance.body;
-        // }
-        // return this._objects
-    }
+    /**
+     * @description If the document has an AcroForm Dictionary return the form as an instance of IForm.
+     *      If there is not an AcroForm Dictionary for the document, doing a get on form will create an new
+     *      empty AcroForm Dictionary.
+     * @todo: Add configuration to disable creation of new form on form getter.
+     */
     get form() {
         return this._instance.form;
     }
@@ -93,7 +104,7 @@ class Document extends events_1.EventEmitter {
         this._password = value;
     }
     get password() {
-        throw EvalError();
+        throw EvalError('Password is not a retrievable property');
     }
     get encrypt() {
         if (this._encrypt)
@@ -113,14 +124,14 @@ class Document extends events_1.EventEmitter {
         });
     }
     /**
-     * load pdf file, emits 'ready' || 'error' events
+     * @desc load pdf file, emits 'ready' || 'error' events
      * @param file - file path
      * @param update - load document for incremental updates
      * @param pwd
      */
     load(file, update = false, pwd) {
         let cb = (e) => {
-            if (e && e instanceof Error) {
+            if (e) {
                 if (e.message === "Password required to modify this document" && pwd) {
                     try {
                         this.password = pwd;
@@ -158,21 +169,19 @@ class Document extends events_1.EventEmitter {
         const page = this._instance.getPage(pageN);
         return new page_1.Page(page);
     }
+    /**
+     * @desc Get an NoPoDoFo Obj from an indirect reference
+     * @param {IRef} ref
+     * @returns {IObj}
+     */
     getObject(ref) {
-        if (!ref || ref instanceof reference_1.Ref === false) {
+        if (!ref || ref._instaance instanceof exports.__mod.Ref === false) {
             throw TypeError();
         }
         else if (ref.isIndirect() === false) {
             throw Error('Document.GetObject is only possible when the object referenced is an indirect object');
         }
-        const objInstance = this._instance.getObject(ref._instance);
-        return new object_1.Obj(objInstance);
-    }
-    getObjects() {
-        const objects = this._instance.getObjects();
-        return objects.map(value => {
-            return new object_1.Obj(value);
-        });
+        return this._instance.getObject(ref._instance);
     }
     /**
      * @description Append doc to the end of the loaded doc
@@ -180,7 +189,7 @@ class Document extends events_1.EventEmitter {
      * @param password
      * @returns {Promise}
      */
-    mergeDocument(doc, password) {
+    appendDocument(doc, password) {
         return new Promise((resolve, reject) => {
             if (!this._loaded) {
                 reject(new Error('load a pdf file before calling this method'));
@@ -190,7 +199,7 @@ class Document extends events_1.EventEmitter {
                     return reject(err);
                 else {
                     try {
-                        password !== null ? this._instance.mergeDocument(doc, password) : this._instance.mergeDocument(doc);
+                        password !== null ? this._instance.appendDocument(doc, password) : this._instance.appendDocument(doc);
                         return resolve();
                     }
                     catch (err) {
@@ -200,14 +209,14 @@ class Document extends events_1.EventEmitter {
             });
         });
     }
-    deletePage(pageIndex) {
+    splicePage(pageIndex) {
         if (!this._loaded) {
             throw new Error('load a pdf file before calling this method');
         }
         if (this.getPageCount() < pageIndex || pageIndex < 0) {
             throw new RangeError('page index out of range');
         }
-        this._instance.deletePage(pageIndex);
+        this._instance.splicePage(pageIndex);
     }
     getVersion() {
         if (!this._loaded) {
@@ -237,13 +246,6 @@ class Document extends events_1.EventEmitter {
             this._instance.writeBuffer(output);
         }
     }
-    getTrailer() {
-        let objInit = this._instance.getTrailer();
-        return new object_1.Obj(objInit);
-    }
-    getCatalog() {
-        return new object_1.Obj(this._instance.getCatalog());
-    }
     isAllowed(protection) {
         return this._instance.isAllowed(protection);
     }
@@ -256,8 +258,7 @@ class Document extends events_1.EventEmitter {
      * @returns {Font}
      */
     createFont(opts) {
-        const instance = this._instance.createFont(opts.fontName, opts.hasOwnProperty('bold') ? opts.bold : false, opts.hasOwnProperty('italic') ? opts.italic : false, opts.hasOwnProperty('encoding') ? opts.encoding : 1, opts.hasOwnProperty('embed') ? opts.embed : false, opts.hasOwnProperty('fileName') ? opts.fileName : null);
-        return new painter_1.Font(instance);
+        return this._instance.createFont(opts.fontName, opts.hasOwnProperty('bold') ? opts.bold : false, opts.hasOwnProperty('italic') ? opts.italic : false, opts.hasOwnProperty('encoding') ? opts.encoding : 1, opts.hasOwnProperty('embed') ? opts.embed : false, opts.hasOwnProperty('fileName') ? opts.fileName : null);
     }
     writeUpdate(device) {
         if (device instanceof signer_1.Signer)
@@ -271,6 +272,9 @@ class Document extends events_1.EventEmitter {
             throw Error('Failed to set encrypt');
         }
         return this.encrypt;
+    }
+    getFont(identifier) {
+        return this._instance.getFont(identifier);
     }
 }
 exports.Document = Document;

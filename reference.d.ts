@@ -16,32 +16,9 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-import { Obj } from "./object";
-import { Document } from './document';
 export interface IRef {
     objectNumber: number;
     generation: number;
     isIndirect(): boolean;
     toString(): string;
-}
-export declare class Ref {
-    private _instance;
-    objectNumber: number;
-    readonly generation: any;
-    set(value: number): void;
-    constructor(_instance: any);
-    write(output: string): void;
-    /**
-     * Check if ref points to an indirect object. Object is indirect if both object and generation numbers are not 0
-     */
-    isIndirect(): boolean;
-    toString(): string;
-    /**
-     * @desc If Ref is an indirect object (most likely) you can "de-reference" the reference to an object.
-     * @todo: This should be possible without needing to pass the document
-     * @todo Replace error message with link to documentation
-     * @param {Document} document - the document that contains the reference
-     * @returns {Obj}
-     */
-    deRef(document: Document): Obj;
 }

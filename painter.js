@@ -257,6 +257,9 @@ class Font {
     constructor(_instance) {
         this._instance = _instance;
     }
+    get object() {
+        return this._instance.object;
+    }
     get size() {
         return this._instance.size;
     }

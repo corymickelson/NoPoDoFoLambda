@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 import { Data } from './data';
-import { Document, FontEncoding } from './document';
-import { Obj } from './object';
+import { Document, FontEncoding, __mod } from './document';
+import { IObj } from './object';
 import { Page } from './page';
 import { Annotation, NPDFAction, NPDFAnnotation, NPDFAnnotationFlag, NPDFAnnotationType } from './annotation';
 import { CheckBox, Field, TextField, ListBox, ComboBox } from './field';
@@ -29,7 +29,7 @@ import { Signer, signature } from './signer';
 import { Stream } from './stream';
 import { IForm } from './form';
 import { ContentsTokenizer } from './parser';
-import { Ref } from './reference';
+import { IRef } from './reference';
 import { Cell, Table } from './table';
-export { ContentsTokenizer, IForm, Stream, Rect, Image, Data, Document, FontEncoding, Obj, Page, Annotation, NPDFAction, NPDFAnnotation, NPDFAnnotationFlag, NPDFAnnotationType, CheckBox, Field, TextField, ListBox, ComboBox, Painter, Encoding, ExtGState, Font, NPDFAlignment, NPDFBlendMode, NPDFColorSpace, NPDFFontType, NPDFLineCapStyle, NPDFLineJoinStyle, NPDFRenderingIntent, NPDFStokeStyle, NPDFTextRenderingMode, NPDFVerticalAlignment, Signer, signature, Ref, Cell, Table };
+export { ContentsTokenizer, IForm, Stream, Rect, Image, Data, Document, FontEncoding, IObj, Page, Annotation, NPDFAction, NPDFAnnotation, NPDFAnnotationFlag, NPDFAnnotationType, CheckBox, Field, TextField, ListBox, ComboBox, Painter, Encoding, ExtGState, Font, NPDFAlignment, NPDFBlendMode, NPDFColorSpace, NPDFFontType, NPDFLineCapStyle, NPDFLineJoinStyle, NPDFRenderingIntent, NPDFStokeStyle, NPDFTextRenderingMode, NPDFVerticalAlignment, Signer, signature, IRef, Cell, Table, __mod };
 export declare const CONVERSION = 0.0028346456693;

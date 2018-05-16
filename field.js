@@ -19,7 +19,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 const document_1 = require("./document");
-const object_1 = require("./object");
 class Field {
     constructor(_instance) {
         this._instance = _instance;
@@ -30,11 +29,14 @@ class Field {
     set readOnly(v) {
         this._instance.readOnly = v;
     }
-    getType() {
-        return this._instance.getType();
+    get fieldName() {
+        return this._instance.fieldName;
     }
-    getFieldName() {
-        return this._instance.getFieldName();
+    set fieldName(v) {
+        this._instance.fieldName = v;
+    }
+    get type() {
+        return this._instance.type;
     }
     getAlternateName() {
         return this._instance.getAlternateName();
@@ -59,7 +61,7 @@ exports.Field = Field;
 class TextField extends Field {
     constructor(field) {
         super(field._instance);
-        if (field.getType() !== 'TextField') {
+        if (field.type !== 'TextField') {
             throw Error('field parameter must be a field of type TextField');
         }
         this._textFieldInstance = new document_1.__mod.TextField(field._instance);
@@ -81,7 +83,7 @@ class CheckBox extends Field {
     }
     constructor(field) {
         super(field._instance);
-        if (field.getType() !== 'CheckBox') {
+        if (field.type !== 'CheckBox') {
             throw Error('must be of type CheckBox');
         }
         this._checkboxInstance = new document_1.__mod.CheckBox(field._instance);
@@ -100,7 +102,7 @@ class EnumerableField extends Field {
     }
     constructor(field) {
         super(field._instance);
-        const t = field.getType();
+        const t = field.type;
         if (t === 'ListBox' || t === 'ComboBox') {
             this._enumerableFieldInstance = new document_1.__mod.ListField(field._instance);
         }
@@ -122,7 +124,7 @@ exports.EnumerableField = EnumerableField;
 class ListBox extends EnumerableField {
     constructor(field) {
         super(field);
-        if (field.getType() !== 'ListBox') {
+        if (field.type !== 'ListBox') {
             throw TypeError('Must be field type ListBox');
         }
         this._listBoxInstance = new document_1.__mod.ListBox(field._instance);
@@ -132,7 +134,7 @@ exports.ListBox = ListBox;
 class ComboBox extends EnumerableField {
     constructor(field) {
         super(field);
-        if (field.getType() !== 'ComboBox') {
+        if (field.type !== 'ComboBox') {
             throw TypeError('Must be field type ComboBox');
         }
         this._comboBoxInstance = new document_1.__mod.ComboBox(field._instance);
@@ -164,8 +166,7 @@ class SignatureField {
         this._instance.setFieldName(n);
     }
     getObject() {
-        const instance = this._instance.getObject();
-        return new object_1.Obj(instance);
+        return this._instance.getObject();
     }
 }
 exports.SignatureField = SignatureField;

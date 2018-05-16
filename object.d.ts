@@ -1,41 +1,30 @@
 /// <reference types="node" />
-import { Ref, IRef } from "./reference";
+/**
+ * This file is part of the NoPoDoFo (R) project.
+ * Copyright (c) 2017-2018
+ * Authors: Cory Mickelson, et al.
+ *
+ * NoPoDoFo is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * NoPoDoFo is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+import { IRef } from "./reference";
 import { Stream } from "stream";
-import { NPDFDictionary } from "./dictionary";
+import { IDictionary } from "./object";
+import { IObj } from "./object";
+import { Document } from "./document";
 export declare type NPDFInternal = any;
 export declare type CoerceKeyType = 'boolean' | 'long' | 'name' | 'real';
 export declare type PDType = 'Boolean' | 'Number' | 'Name' | 'Real' | 'String' | 'Array' | 'Dictionary' | 'Reference' | 'RawData';
-export interface NArray {
-    [key: number]: Obj;
-    immutable: boolean;
-    length: number;
-    unshift: (...v: Array<Obj>) => number;
-    push: (...v: Array<Obj>) => number;
-    pop: () => Obj;
-    shift: () => Obj;
-}
-export interface NObj {
-    reference: number;
-    length: number;
-    stream: Stream;
-    type: PDType;
-    hasStream(): boolean;
-    getOffset(key: string): Promise<number>;
-    write(output: string, cb: Function): void;
-    flateCompressStream(): void;
-    delayedStreamLoad(): void;
-    asBool(): boolean;
-    asString(): string;
-    asName(): string;
-    asReal(): number;
-    asNumber(): number;
-    asArray(): NArray;
-    asObject(): {
-        [key: string]: Obj;
-    };
-    asReference(): Ref;
-    asBuffer(): Buffer;
-}
 export interface IObj {
     reference: number;
     length: number;
@@ -48,7 +37,7 @@ export interface IObj {
     flateCompressStream(): void;
     delayedStreamLoad(): void;
     getBool(): boolean;
-    getDictionary(): NPDFDictionary;
+    getDictionary(): IDictionary;
     getString(): string;
     getName(): string;
     getReal(): number;
@@ -57,7 +46,6 @@ export interface IObj {
     getReference(): IRef;
     getBuffer(): Buffer;
     clear(): void;
-    eq(i: NPDFInternal): boolean;
 }
 export interface IArray {
     dirty: boolean;
@@ -70,69 +58,19 @@ export interface IArray {
     push(v: Object): void;
     write(destination: string): void;
 }
-/**
- * @desc This class represents a PDF indirect Object in memory
- *      It is possible to manipulate the stream which can be appended to the
- * object(if the object is of underlying type dictionary) A PdfObject is
- * uniquely identified by an object number and generation number The object can
- * easily be written to a file using the write function
- *
- * @todo New instance object not yet supported. Objects can only be instantiated
- * from an existing object
- */
-export declare class Obj implements NObj {
-    private _instance;
-    readonly reference: any;
-    readonly length: any;
-    readonly stream: any;
-    readonly type: any;
-    constructor(instance: any);
-    hasStream(): boolean;
-    /**
-     * @desc Calculates the byte offset of key from the start of the object if the
-     * object was written to disk at the moment of calling the function This
-     * function is very calculation intensive!
-     *
-     * @param {string} key object dictionary key
-     * @returns {number} - byte offset
-     */
-    getOffset(key: string): Promise<number>;
-    write(output: string, cb: Function): void;
-    /**
-     * @desc This function compresses any currently set stream using the
-     * FlateDecode algorithm. JPEG compressed streams will not be compressed again
-     * using this function. Entries to the filter dictionary will be added if
-     * necessary.
-     */
-    flateCompressStream(): void;
-    /**
-     * @desc Dynamically load this object and any associated stream from a PDF
-     * file
-     */
-    delayedStreamLoad(): void;
-    asBool(): boolean;
-    asString(): string;
-    asName(): string;
-    asReal(): number;
-    asNumber(): number;
-    /**
-     * The asArray method returns an Array Proxy (or an Object that is wrapped in a proxy that exposes methods similar to
-     * an array, which modifies the underlying PdfArray Object). This is NOT an array, but provides a data structure
-     * as close to an array as possible to help user's view/modify the data. If a method or property is not supported
-     * a console message will be provided.
-     * @returns {Array<Obj>}
-     */
-    asArray(): NArray;
-    asObject(): {
-        [key: string]: Obj;
-    };
-    asReference(): Ref;
-    asBuffer(): Buffer;
-    /**
-     *
-     * @param internal - NPDFInternal Dictionary
-     */
-    static objProxy(internal: NPDFInternal): {
-        [key: string]: Obj;
-    };
+export declare type IDictionaryKeyType = 'boolean' | 'long' | 'name' | 'real';
+export interface IDictionary {
+    dirty: boolean;
+    immutable: boolean;
+    tryGet(doc: Document, candidate: IObj): IDictionary | null;
+    getKey(k: string): IObj;
+    addKey(prop: string, value: boolean | number | string | IObj): void;
+    getKeys(): string[];
+    hasKey(k: string): boolean;
+    removeKey(k: string): void;
+    getKeyAs(k: string, t: IDictionaryKeyType): string | number;
+    clear(): void;
+    write(destination: string, cb: (e: Error, i: string) => void): void;
+    writeSync(destination: string): void;
 }
+export declare const resolveDictionary: (doc: Document, candidate: IObj) => IDictionary | null;

@@ -16,18 +16,26 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-import { IDictionary } from './object';
-import { IFont } from './painter';
-export declare enum ISigFlags {
-    SignatureExists = 1,
-    AppendOnly = 2,
-    SignatureExistsAppendOnly = 3,
+import { BaseDocument } from "./base-document";
+import { IEncrypt } from "./encrypt";
+export declare enum NPDFVersion {
+    Pdf11 = 0,
+    Pdf12 = 1,
+    Pdf13 = 2,
+    Pdf14 = 3,
+    Pdf15 = 4,
+    Pdf16 = 5,
+    Pdf17 = 6,
 }
-export interface IForm {
-    needAppearances: boolean;
-    dictionary: IDictionary;
-    DA?: string;
-    DR?: IDictionary;
-    Fonts?: IFont[];
-    SigFlags?: ISigFlags;
+export declare enum NPDFWriteMode {
+    Default = 1,
+    Compact = 2,
+}
+export declare class StreamDocument extends BaseDocument {
+    private _instance;
+    constructor(name: string, version: NPDFVersion, writer: NPDFWriteMode, encrypt?: IEncrypt);
+    /**
+     * @description Calls PdfStreamedDocument::Close and emits the close event.
+     */
+    close(): void;
 }

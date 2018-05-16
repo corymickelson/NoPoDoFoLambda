@@ -20,7 +20,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 const field_1 = require("./field");
 const rect_1 = require("./rect");
-const object_1 = require("./object");
 const annotation_1 = require("./annotation");
 class Page {
     constructor(_instance) {
@@ -38,7 +37,7 @@ class Page {
         return this._instance.number;
     }
     set number(n) {
-        throw Error("Can not change page number. Use Document.deletePage() to adjust page order.");
+        throw Error("Can not change page number. Use Document.splicePage() to adjust page order.");
     }
     get width() {
         return this._instance.width;
@@ -64,12 +63,10 @@ class Page {
         this._instance.rotation = degree;
     }
     getContents(append) {
-        const objInstance = this._instance.getContents(append);
-        return new object_1.Obj(objInstance);
+        return this._instance.getContents(append);
     }
     getResources() {
-        const objInstance = this._instance.getResources();
-        return new object_1.Obj(objInstance);
+        return this._instance.getResources();
     }
     getMediaBox() {
         const mediaBoxPositions = this._instance.getMediaBox();

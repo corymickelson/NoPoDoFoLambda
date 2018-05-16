@@ -23,7 +23,7 @@ import { Stream } from './stream';
 import { Document } from './document';
 import { Rect } from "./rect";
 import { NPDFPoint } from "./painter";
-import { Obj } from './object';
+import { IObj } from './object';
 export declare type NPDFcmyk = [number, number, number, number];
 export declare type NPDFrgb = [number, number, number];
 export declare type NPDFGrayScale = number;
@@ -167,8 +167,26 @@ export interface FontMetrics {
     wordSpace: number;
     fontType?: string;
 }
+export interface IFont {
+    object: IObj;
+    size: number;
+    scale: number;
+    charSpace: number;
+    wordSpace: number;
+    underline: boolean;
+    strikeOut: boolean;
+    identifier: string;
+    isBold(): boolean;
+    isItalic(): boolean;
+    getEncoding(): Encoding;
+    getMetrics(): FontMetrics;
+    stringWidth(v: string): number;
+    write(content: string, stream: Stream): void;
+    embed(): void;
+}
 export declare class Font {
     private _instance;
+    readonly object: any;
     size: number;
     scale: number;
     readonly charSpace: any;
@@ -190,7 +208,7 @@ export declare class Encoding {
     private _instance;
     constructor(_instance: any);
     addToDictionary(target: {
-        [key: string]: Obj;
+        [key: string]: IObj;
     }): void;
     convertToUnicode(content: string, font: Font): string;
     convertToEncoding(content: string, font: Font): Buffer;

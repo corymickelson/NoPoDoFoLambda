@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 import { Document } from './document';
-import { NPDFInternal, Obj } from "./object";
+import { NPDFInternal, IObj } from "./object";
 import { Annotation } from "./annotation";
 export interface IFieldInfo {
     name: string;
@@ -36,9 +36,9 @@ export declare type FieldType = 'TextField' | 'CheckBox' | 'RadioButton' | 'Push
 export declare class Field {
     private _instance;
     readOnly: boolean;
+    fieldName: string;
+    readonly type: FieldType;
     constructor(_instance: NPDFInternal);
-    getType(): FieldType;
-    getFieldName(): string;
     getAlternateName(): string;
     getMappingName(): string;
     isRequired(): boolean;
@@ -85,5 +85,5 @@ export declare class SignatureField {
     setCreator(creator: string): void;
     setDate(): void;
     setFieldName(n: string): void;
-    getObject(): Obj;
+    getObject(): IObj;
 }

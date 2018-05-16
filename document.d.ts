@@ -1,11 +1,11 @@
 /// <reference types="node" />
-import { Obj, IObj } from './object';
+import { IObj } from './object';
 import { Page } from './page';
 import { EncryptOption, IEncrypt, ProtectionOption } from './encrypt';
 import { EventEmitter } from 'events';
-import { Font } from "./painter";
+import { IFont } from "./painter";
 import { Signer } from './signer';
-import { Ref } from "./reference";
+import { IRef } from "./reference";
 import { IForm } from "./form";
 export declare const __mod: any;
 export declare type Callback = (err: Error, data: Buffer | string) => void;
@@ -41,10 +41,22 @@ export declare class Document extends EventEmitter {
     private _loaded;
     private _password;
     private _encrypt;
-    private _objects?;
+    readonly body: IObj[];
+    readonly trailer: IObj;
+    readonly catalog: IObj;
+    readonly version: number;
+    /**
+     * @desc A Document has been read into memory
+     * @returns {boolean}
+     */
     readonly loaded: boolean;
-    readonly body: Array<IObj>;
-    readonly form: IForm | null;
+    /**
+     * @description If the document has an AcroForm Dictionary return the form as an instance of IForm.
+     *      If there is not an AcroForm Dictionary for the document, doing a get on form will create an new
+     *      empty AcroForm Dictionary.
+     * @todo: Add configuration to disable creation of new form on form getter.
+     */
+    readonly form: IForm;
     password: string;
     readonly encrypt: IEncrypt;
     static gc(file: string, pwd: string, output: string, cb: (e: Error, d: string | Buffer) => void): void;
@@ -58,7 +70,7 @@ export declare class Document extends EventEmitter {
      */
     constructor(file: string | Buffer, update?: boolean, pwd?: string);
     /**
-     * load pdf file, emits 'ready' || 'error' events
+     * @desc load pdf file, emits 'ready' || 'error' events
      * @param file - file path
      * @param update - load document for incremental updates
      * @param pwd
@@ -66,16 +78,20 @@ export declare class Document extends EventEmitter {
     private load(file, update?, pwd?);
     getPageCount(): number;
     getPage(pageN: number): Page;
-    getObject(ref: Ref): Obj;
-    getObjects(): Array<Obj>;
+    /**
+     * @desc Get an NoPoDoFo Obj from an indirect reference
+     * @param {IRef} ref
+     * @returns {IObj}
+     */
+    getObject(ref: IRef): IObj;
     /**
      * @description Append doc to the end of the loaded doc
      * @param {string} doc - pdf file path
      * @param password
      * @returns {Promise}
      */
-    mergeDocument(doc: string, password?: string): Promise<any>;
-    deletePage(pageIndex: number): void;
+    appendDocument(doc: string, password?: string): Promise<any>;
+    splicePage(pageIndex: number): void;
     getVersion(): number;
     isLinearized(): boolean;
     /**
@@ -84,8 +100,6 @@ export declare class Document extends EventEmitter {
      * @param {Function} [cb] - optional callback
      */
     write(output: Callback | string, cb?: Callback): void;
-    getTrailer(): Obj;
-    getCatalog(): Obj;
     isAllowed(protection: ProtectionOption): boolean;
     /**
      * @desc Creates a PdfFont instance for use in NoPoDoFo generated Pdf Document. Note
@@ -95,7 +109,8 @@ export declare class Document extends EventEmitter {
      * @param {CreateFontOpts & Object} opts
      * @returns {Font}
      */
-    createFont(opts: CreateFontOpts & Object): Font;
+    createFont(opts: CreateFontOpts & Object): IFont;
     writeUpdate(device: string | Signer): void;
     createEncrypt(opts: EncryptOption): IEncrypt;
+    getFont(identifier: string): IFont | null;
 }

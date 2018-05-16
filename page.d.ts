@@ -18,7 +18,7 @@
  */
 import { IFieldInfo, Field } from './field';
 import { Rect } from './rect';
-import { Obj } from './object';
+import { IObj } from './object';
 import { Annotation, NPDFAnnotation } from './annotation';
 export interface IPage {
     rotation: number;
@@ -31,8 +31,8 @@ export interface IPage {
     getField(index: number): Field;
     getFields(): Array<Field>;
     getFieldIndex(fieldName: string): number;
-    getContents(append: boolean): Obj;
-    getResources(): Obj;
+    getContents(append: boolean): IObj;
+    getResources(): IObj;
     getMediaBox(): Rect;
     getBleedBox(): Rect;
     getArtBox(): Rect;
@@ -50,8 +50,8 @@ export declare class Page implements IPage {
     height: number;
     rotation: number;
     constructor(_instance: any);
-    getContents(append: boolean): Obj;
-    getResources(): Obj;
+    getContents(append: boolean): IObj;
+    getResources(): IObj;
     getMediaBox(): Rect;
     getBleedBox(): Rect;
     getArtBox(): Rect;
