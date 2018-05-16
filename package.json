@@ -1,6 +1,6 @@
 {
   "name": "nopodofolambda",
-  "version": "0.5.0",
+  "version": "0.6.1",
   "description": "NoPoDoFo executable for aws lambda",
   "main": "index.js",
   "scripts": {},
