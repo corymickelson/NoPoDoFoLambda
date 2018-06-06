@@ -1,7 +1,7 @@
 {
   "name": "nopodofolambda",
-  "version": "0.6.1",
-  "description": "NoPoDoFo executable for aws lambda",
+  "version": "0.7.0",
+  "description": "NoPoDoFo dependencies (shared libraries) required for aws lambda execution",
   "main": "index.js",
   "scripts": {},
   "repository": {
@@ -21,8 +21,6 @@
     "url": "https://github.com/corymickelson/NoPoDoFoLambda/issues"
   },
   "homepage": "https://github.com/corymickelson/NoPoDoFoLambda#readme",
-  "dependencies": {
-    "bindings": "^1.3.0"
-  },
+  "dependencies": {},
   "devDependencies": {}
 }
