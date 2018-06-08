@@ -1,0 +1,15 @@
+{
+  "name": "spec",
+  "version": "0.7.0",
+  "description": "test function",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Cory Mickelson<mickelsoncory@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "nopodofo": "github:corymickelson/NoPoDoFo#7feb5ed77ca4c51c22253ef6cf87d2ebdb9b9717",
+    "nopodofolambda": "^0.7.0"
+  }
+}
