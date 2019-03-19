@@ -1,6 +1,6 @@
 {
   "name": "nopodofolambda",
-  "version": "0.8.0",
+  "version": "1.0.0-pre",
   "description": "NoPoDoFo dependencies (shared libraries) required for aws lambda execution",
   "main": "index.js",
   "scripts": {},
